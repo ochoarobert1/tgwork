@@ -1,7 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const entries = glob.sync(__dirname + '/themes/hello-elementor-child/src/scss/elementor/*.scss').toString();
 
@@ -23,6 +22,9 @@ module.exports = {
 				test: /\.js$/,
 				exclude: /node_modules/,
 				use: [],
+			}, {
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
 			}, {
 				test: /\.scss$/,
 				exclude: /node_modules/,
@@ -46,9 +48,9 @@ module.exports = {
 		]
 	},
 	optimization: {
-		minimizer: [
-			new CssMinimizerPlugin()
-		],
-		minimize: true
+		minimize: true,
+		minimizer: [new TerserPlugin({
+			extractComments: true,
+		})],
 	},
 };

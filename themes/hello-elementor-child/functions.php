@@ -16,6 +16,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('HELLO_ELEMENTOR_CHILD_VERSION', '2.0.0');
+define('HELLO_ELEMENTOR_CHILD_PREFIX', 'tgores');
 
 /**
  * Load child theme scripts & styles.
@@ -25,15 +26,59 @@ define('HELLO_ELEMENTOR_CHILD_VERSION', '2.0.0');
 function hello_elementor_child_scripts_styles()
 {
 
+	wp_deregister_style('hello_elementor_enqueue_style');
+	wp_deregister_style('hello_elementor_enqueue_theme_style');
 	wp_enqueue_style(
-		'hello-elementor-child-style',
+		'bootstrap',
+		get_stylesheet_directory_uri() . '/assets/css/app.css',
+		[],
+		HELLO_ELEMENTOR_CHILD_VERSION
+	);
+
+	wp_enqueue_style(
+		HELLO_ELEMENTOR_CHILD_PREFIX . '-google-fonts',
+		'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
+		[],
+		HELLO_ELEMENTOR_CHILD_VERSION
+	);
+
+	wp_enqueue_style(
+		HELLO_ELEMENTOR_CHILD_PREFIX . '-child-style',
 		get_stylesheet_directory_uri() . '/style.css',
 		[
-			'hello-elementor-theme-style',
+			HELLO_ELEMENTOR_CHILD_PREFIX . '-google-fonts',
+			'bootstrap'
 		],
 		HELLO_ELEMENTOR_CHILD_VERSION
 	);
+
+	wp_enqueue_script(
+		HELLO_ELEMENTOR_CHILD_PREFIX . '-functions',
+		get_stylesheet_directory_uri() . '/assets/js/app.min.js',
+		[
+			'jquery'
+		],
+		HELLO_ELEMENTOR_CHILD_VERSION,
+		true
+	);
 }
 add_action('wp_enqueue_scripts', 'hello_elementor_child_scripts_styles', 20);
+
+function disable_emojis()
+{
+	remove_action('wp_head', 'print_emoji_detection_script', 7);
+	remove_action('admin_print_scripts', 'print_emoji_detection_script');
+	remove_action('wp_print_styles', 'print_emoji_styles');
+	remove_action('admin_print_styles', 'print_emoji_styles');
+	remove_filter('the_content_feed', 'wp_staticize_emoji');
+	remove_filter('comment_text_rss', 'wp_staticize_emoji');
+	remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+
+	// Remove from TinyMCE
+	add_filter('tiny_mce_plugins', 'disable_emojis_tinymce');
+}
+add_action('init', 'disable_emojis');
+
+remove_action('wp_head', 'wp_generator');
 
 require_once('includes/elementor.php');
