@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme functions and definitions.
  *
@@ -10,18 +11,19 @@
  * @package HelloElementorChild
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'HELLO_ELEMENTOR_CHILD_VERSION', '2.0.0' );
+define('HELLO_ELEMENTOR_CHILD_VERSION', '2.0.0');
 
 /**
  * Load child theme scripts & styles.
  *
  * @return void
  */
-function hello_elementor_child_scripts_styles() {
+function hello_elementor_child_scripts_styles()
+{
 
 	wp_enqueue_style(
 		'hello-elementor-child-style',
@@ -31,6 +33,7 @@ function hello_elementor_child_scripts_styles() {
 		],
 		HELLO_ELEMENTOR_CHILD_VERSION
 	);
-
 }
-add_action( 'wp_enqueue_scripts', 'hello_elementor_child_scripts_styles', 20 );
+add_action('wp_enqueue_scripts', 'hello_elementor_child_scripts_styles', 20);
+
+require_once('includes/elementor.php');
