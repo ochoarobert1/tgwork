@@ -1,6 +1,7 @@
 @import "./node_modules/bootstrap/scss/bootstrap";
 @import "base/colors";
 @import "base/fonts";
+@import "base/theme";
 
 body {
 	font-family: $primary-font;

@@ -26,8 +26,6 @@ define('HELLO_ELEMENTOR_CHILD_PREFIX', 'tgores');
 function hello_elementor_child_scripts_styles()
 {
 
-	wp_deregister_style('hello_elementor_enqueue_style');
-	wp_deregister_style('hello_elementor_enqueue_theme_style');
 	wp_enqueue_style(
 		'bootstrap',
 		get_stylesheet_directory_uri() . '/assets/css/app.css',
@@ -73,10 +71,8 @@ function disable_emojis()
 	remove_filter('the_content_feed', 'wp_staticize_emoji');
 	remove_filter('comment_text_rss', 'wp_staticize_emoji');
 	remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
-
-	// Remove from TinyMCE
-	add_filter('tiny_mce_plugins', 'disable_emojis_tinymce');
 }
+
 add_action('init', 'disable_emojis');
 
 remove_action('wp_head', 'wp_generator');
