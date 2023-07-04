@@ -1,5 +1,8 @@
 const path = require('path');
 const glob = require('glob');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
 const entries = glob.sync(__dirname + '/themes/hello-elementor-child/src/scss/elementor/*.scss').toString();
 
 module.exports = {
@@ -41,5 +44,11 @@ module.exports = {
 				],
 			}
 		]
-	}
+	},
+	optimization: {
+		minimizer: [
+			new CssMinimizerPlugin()
+		],
+		minimize: true
+	},
 };
