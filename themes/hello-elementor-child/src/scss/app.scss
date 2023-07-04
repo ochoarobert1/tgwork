@@ -1,6 +1,8 @@
-$color: crimson;
+@import "./node_modules/bootstrap/scss/bootstrap";
+@import "base/colors";
+@import "base/fonts";
 
-h1 {
-	background: $color;
-	padding: 15px - 10;
+body {
+	font-family: $primary-font;
+	font-size: 1rem;
 }
