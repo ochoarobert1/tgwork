@@ -38,13 +38,13 @@ class C6SectionCarousel extends Widget_Base
 
 	public function get_categories()
 	{
-		return ['general'];
+		return ['tg-category'];
 	}
 
 
 	public function get_keywords()
 	{
-		return ['tg-category'];
+		return ['C6 Section Carousel', 'Section Carousel', 'Tom Gores'];
 	}
 
 	protected function register_controls()

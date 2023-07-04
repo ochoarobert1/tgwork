@@ -48,10 +48,8 @@ class TGElementorWidgets
 			return;
 
 		foreach ($ffs as $ff) {
-			$className = preg_replace('/\s+/', '', ucwords(preg_replace('/[-]/', ' ', $ff)));
+			$className = '\\' . preg_replace('/\s+/', '', ucwords(preg_replace('/[-]/', ' ', $ff)));
 			require_once $path . '/' . $ff . '/widget.php';
-
-			var_dump($className);
 
 			$widgets_manager->register(new $className());
 		}
