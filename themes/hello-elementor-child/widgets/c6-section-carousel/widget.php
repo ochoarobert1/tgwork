@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * C6 Section Carousel
  *
  * Elementor widget that inserts an embbedable content into the page, from any given URL.
@@ -11,19 +11,17 @@
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Repeater;
+use Elementor\Utils;
 
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-/**
- * C6SectionCarousel
- */
 class C6SectionCarousel extends Widget_Base
 {
 	public function get_name()
 	{
-		return 'C6SectionCarousel';
+		return esc_attr('C6SectionCarousel');
 	}
 
 	public function get_title()
@@ -33,7 +31,7 @@ class C6SectionCarousel extends Widget_Base
 
 	public function get_icon()
 	{
-		return 'eicon-bullet-list';
+		return esc_attr('eicon-bullet-list');
 	}
 
 	public function get_categories()
@@ -41,10 +39,19 @@ class C6SectionCarousel extends Widget_Base
 		return ['tg-category'];
 	}
 
-
 	public function get_keywords()
 	{
 		return ['C6 Section Carousel', 'Section Carousel', 'Tom Gores'];
+	}
+
+	public function get_style_depends()
+	{
+		return ['swiper', 'c6-section-carousel-style'];
+	}
+
+	public function get_script_depends()
+	{
+		return ['swiper', 'c6-section-carousel-script'];
 	}
 
 	protected function register_controls()
@@ -127,9 +134,9 @@ class C6SectionCarousel extends Widget_Base
 			'itemImage',
 			[
 				'label' => esc_html__('Choose Item Image', 'elementor-list-widget'),
-				'type' => \Elementor\Controls_Manager::MEDIA,
+				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
+					'url' => Utils::get_placeholder_image_src(),
 				],
 			]
 		);
@@ -156,7 +163,7 @@ class C6SectionCarousel extends Widget_Base
 						'itemLink' => '',
 					],
 				],
-				'title_field' => '{{{ itemText }}}',
+				'title_field' => '{{ itemText }}',
 			]
 		);
 
@@ -167,6 +174,15 @@ class C6SectionCarousel extends Widget_Base
 			[
 				'label' => esc_html__('Style', 'elementor-list-widget'),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Background::get_type(),
+			[
+				'name' => 'background',
+				'types' => ['classic', 'gradient', 'video'],
+				'selector' => '{{WRAPPER}} .your-class',
 			]
 		);
 
@@ -219,46 +235,94 @@ class C6SectionCarousel extends Widget_Base
 			]
 		);
 
-		$this->add_control(
-			'marker_spacing',
-			[
-				'label' => esc_html__('Spacing', 'elementor-list-widget'),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => ['px', 'em', 'rem', 'custom'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'em' => [
-						'min' => 0,
-						'max' => 10,
-					],
-					'rem' => [
-						'min' => 0,
-						'max' => 10,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 40,
-				],
-				'selectors' => [
-					// '{{WRAPPER}} .elementor-list-widget' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .elementor-list-widget' => 'padding-inline-start: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+?>
+		<section class="section-carousel container">
+			<div class="row align-items-center justify-content-center">
+				<div class="section-carousel-images col-xl-3 col-md-6 col-12">
+					<?php $arrayImgs = $settings['imageArray']; ?>
+					<div class="section-carousel-swiper-content">
+						<div class="swiper">
+							<div class="swiper-wrapper">
+								<?php foreach ($arrayImgs as $img) : ?>
+									<div class="swiper-slide">
+										<div class="section-carousel-item">
+											<?php if ($img['itemLink']['url'] != '') : ?>
+												<a href="<?php echo esc_url($img['itemLink']['url']); ?>"><?php echo esc_html($img['itemText']); ?></a>
+											<?php endif; ?>
+											<img src="<?php echo esc_url($img['itemImage']['url']); ?>" class="img-fluid" alt="<?php echo esc_attr($img['itemText']); ?>" loading="lazy?>">
+										</div>
+									</div>
+								<?php endforeach; ?>
+							</div>
+							<div class="swiper-pagination"></div>
+							<div class="swiper-button-prev"></div>
+							<div class="swiper-button-next"></div>
+						</div>
+					</div>
+				</div>
+				<div class="section-carousel-content col-xl-6 col-md-6 col-12">
+					<h3><?php echo esc_html($settings['textTitle']); ?></h3>
+					<?php echo wp_kses_post($settings['textContent']); ?>
+
+					<?php if ($settings['btnText'] != '') : ?>
+						<a href="<?php esc_url($settings['btnLink']['url']); ?>" class="btn btn-primary"><?php echo esc_html($settings['btnText']); ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
+		</section>
+	<?php
 	}
 
 	protected function content_template()
 	{
+	?>
+		<section class="section-carousel container">
+			<div class="row align-items-center justify-content-center">
+				<div class="section-carousel-images col-xl-4 col-md-6 col-12">
+					<div class="section-carousel-content">
+						<div class="swiper">
+							<div class="swiper-wrapper">
+								<# _.each( settings.imageArray, function( item, index ) { var repeater_setting_key=view.getRepeaterSettingKey( 'text' , 'imageArray' , index ); view.addRenderAttribute( repeater_setting_key, 'class' , 'elementor-list-widget-text' ); view.addInlineEditingAttributes( repeater_setting_key ); #>
+									<div class="swiper-slide">
+										<div class="section-carousel-item">
+											<# if ( item.itemLink ) { #>
+												<# view.addRenderAttribute( `link_${index}`, item.itemLink ); #>
+													<a href="{{ item.itemLink.url }}" {{ view.getRenderAttributeString( `link_${index}` ) }}>
+														{{item.itemText}}
+													</a>
+													<# } else { #>
+														{{item.itemText}}
+														<# } #>
+															<img src="{{ item.itemImage.url }}" class="img-fluid" alt="{{item.itemText}}" loading="lazy" />
+										</div>
+									</div>
+									<# } ); #>
+							</div>
+							<div class="swiper-pagination"></div>
+							<div class="swiper-button-prev"></div>
+							<div class="swiper-button-next"></div>
+						</div>
+					</div>
+				</div>
+				<div class="section-carousel-content col-xl-4 col-md-6 col-12">
+					<h3>{{ settings.textTitle }}</h3>
+					<p>{{ settings.textContent }}</p>
+
+					<# if ( settings.btnText ) { #>
+						<# view.addRenderAttribute( `link_${index}`, settings.btnLink ); #>
+							<a href="{{ settings.btnLink.url }}" {{ view.getRenderAttributeString( `link_${index}` ) }}>
+								{{settings.btnText}}
+							</a>
+							<# } #>
+				</div>
+			</div>
+		</section>
+<?php
 	}
 }

@@ -2,7 +2,7 @@ const path = require('path');
 const glob = require('glob');
 const TerserPlugin = require("terser-webpack-plugin");
 
-const entries = glob.sync(__dirname + '/themes/hello-elementor-child/src/scss/elementor/*.scss').toString();
+const entries = glob.sync(__dirname + '/themes/hello-elementor-child/widgets/**/*.scss').toString();
 
 module.exports = {
 	mode: 'development',
@@ -33,13 +33,20 @@ module.exports = {
 						loader: 'file-loader',
 						options: {
 							outputPath: (url, resourcePath, context) => {
-								if (/\\elementor\\/.test(resourcePath)) {
+								if (/\\widgets\\/.test(resourcePath)) {
 									return `css/elementor/${url}`;
 								}
 								return `css/${url}`;
 							},
 							useRelativePath: true,
-							name: '[name].css'
+							name(resourcePath, resourceQuery) {
+								if (/\\widgets\\/.test(resourcePath)) {
+									var widgetFolder = resourcePath.split('\\widgets\\');
+									var widgetName = widgetFolder[1].split('\\');
+									return widgetName[0] + '.css';
+								}
+								return '[name].css';
+							},
 						}
 					},
 					'sass-loader'
