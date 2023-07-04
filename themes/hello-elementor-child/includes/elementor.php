@@ -36,14 +36,13 @@ class TGElementorWidgets
 	{
 	}
 
-	public function register_list_widget($widgets_manager )
+	public function register_list_widget($widgets_manager)
 	{
 		$path = get_stylesheet_directory() . '/widgets';
 		$ffs = scandir($path);
 		unset($ffs[array_search('.', $ffs, true)]);
 		unset($ffs[array_search('..', $ffs, true)]);
 
-		// prevent empty ordered elements
 		if (count($ffs) < 1)
 			return;
 
