@@ -32,14 +32,14 @@ module.exports = {
 					{
 						loader: 'file-loader',
 						options: {
-							outputPath: (url, resourcePath, context) => {
+							outputPath: (url, resourcePath) => {
 								if (/\\widgets\\/.test(resourcePath)) {
 									return `css/elementor/${url}`;
 								}
 								return `css/${url}`;
 							},
 							useRelativePath: true,
-							name(resourcePath, resourceQuery) {
+							name(resourcePath) {
 								if (/\\widgets\\/.test(resourcePath)) {
 									var widgetFolder = resourcePath.split('\\widgets\\');
 									var widgetName = widgetFolder[1].split('\\');

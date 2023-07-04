@@ -26,7 +26,7 @@ class C6SectionCarousel extends Widget_Base
 
 	public function get_title()
 	{
-		return esc_html__('C6 Section Carousel', 'elementor-list-widget');
+		return esc_html__('C6 Section Carousel', 'tgores');
 	}
 
 	public function get_icon()
@@ -60,7 +60,7 @@ class C6SectionCarousel extends Widget_Base
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__('Content', 'elementor-list-widget'),
+				'label' => esc_html__('Content', 'tgores'),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -68,7 +68,7 @@ class C6SectionCarousel extends Widget_Base
 		$this->add_control(
 			'textTitle',
 			[
-				'label' => esc_html__('Section Title', 'elementor-list-widget'),
+				'label' => esc_html__('Section Title', 'tgores'),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => esc_html__('Element Heading', 'elementor-oembed-widget')
 			]
@@ -77,28 +77,28 @@ class C6SectionCarousel extends Widget_Base
 		$this->add_control(
 			'textContent',
 			[
-				'label' => esc_html__('Section Content', 'elementor-list-widget'),
+				'label' => esc_html__('Section Content', 'tgores'),
 				'type' => Controls_Manager::WYSIWYG,
-				'default' => esc_html__('Default description', 'elementor-list-widget'),
-				'placeholder' => esc_html__('Type your description here', 'elementor-list-widget')
+				'default' => esc_html__('Default description', 'tgores'),
+				'placeholder' => esc_html__('Type your description here', 'tgores')
 			]
 		);
 
 		$this->add_control(
 			'btnText',
 			[
-				'label' => esc_html__('Button CTA Text', 'elementor-list-widget'),
+				'label' => esc_html__('Button CTA Text', 'tgores'),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__('Read More', 'elementor-list-widget')
+				'placeholder' => esc_html__('Read More', 'tgores')
 			]
 		);
 
 		$this->add_control(
 			'btnLink',
 			[
-				'label' => esc_html__('Button CTA Link URL', 'elementor-list-widget'),
+				'label' => esc_html__('Button CTA Link URL', 'tgores'),
 				'type' => Controls_Manager::URL,
-				'placeholder' => esc_html__('https://your-link.com', 'elementor-list-widget'),
+				'placeholder' => esc_html__('https://your-link.com', 'tgores'),
 			]
 		);
 
@@ -107,10 +107,10 @@ class C6SectionCarousel extends Widget_Base
 		$repeater->add_control(
 			'itemText',
 			[
-				'label' => esc_html__('Item Text', 'elementor-list-widget'),
+				'label' => esc_html__('Item Text', 'tgores'),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__('Say Detroit', 'elementor-list-widget'),
-				'default' => esc_html__('Say Detroit', 'elementor-list-widget'),
+				'placeholder' => esc_html__('Say Detroit', 'tgores'),
+				'default' => esc_html__('Say Detroit', 'tgores'),
 				'label_block' => true,
 				'dynamic' => [
 					'active' => true,
@@ -121,9 +121,9 @@ class C6SectionCarousel extends Widget_Base
 		$repeater->add_control(
 			'itemLink',
 			[
-				'label' => esc_html__('Item Link URL', 'elementor-list-widget'),
+				'label' => esc_html__('Item Link URL', 'tgores'),
 				'type' => Controls_Manager::URL,
-				'placeholder' => esc_html__('https://your-link.com', 'elementor-list-widget'),
+				'placeholder' => esc_html__('https://your-link.com', 'tgores'),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -133,7 +133,7 @@ class C6SectionCarousel extends Widget_Base
 		$repeater->add_control(
 			'itemImage',
 			[
-				'label' => esc_html__('Choose Item Image', 'elementor-list-widget'),
+				'label' => esc_html__('Choose Item Image', 'tgores'),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
@@ -146,20 +146,20 @@ class C6SectionCarousel extends Widget_Base
 		$this->add_control(
 			'imageArray',
 			[
-				'label' => esc_html__('Image Items', 'elementor-list-widget'),
+				'label' => esc_html__('Image Items', 'tgores'),
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'itemText' => esc_html__('Item #1', 'elementor-list-widget'),
+						'itemText' => esc_html__('Item #1', 'tgores'),
 						'itemLink' => '',
 					],
 					[
-						'itemText' => esc_html__('Item #2', 'elementor-list-widget'),
+						'itemText' => esc_html__('Item #2', 'tgores'),
 						'itemLink' => '',
 					],
 					[
-						'itemText' => esc_html__('Item #3', 'elementor-list-widget'),
+						'itemText' => esc_html__('Item #3', 'tgores'),
 						'itemLink' => '',
 					],
 				],
@@ -172,7 +172,7 @@ class C6SectionCarousel extends Widget_Base
 		$this->start_controls_section(
 			'style_content_section',
 			[
-				'label' => esc_html__('Style', 'elementor-list-widget'),
+				'label' => esc_html__('Style', 'tgores'),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -189,7 +189,7 @@ class C6SectionCarousel extends Widget_Base
 		$this->add_control(
 			'title_color',
 			[
-				'label' => esc_html__('Color', 'elementor-list-widget'),
+				'label' => esc_html__('Color', 'tgores'),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-list-widget-text' => 'color: {{VALUE}};',
@@ -219,7 +219,7 @@ class C6SectionCarousel extends Widget_Base
 		$this->start_controls_section(
 			'style_marker_section',
 			[
-				'label' => esc_html__('Marker Style', 'elementor-list-widget'),
+				'label' => esc_html__('Marker Style', 'tgores'),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -227,7 +227,7 @@ class C6SectionCarousel extends Widget_Base
 		$this->add_control(
 			'marker_color',
 			[
-				'label' => esc_html__('Color', 'elementor-list-widget'),
+				'label' => esc_html__('Color', 'tgores'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-list-widget-text::marker' => 'color: {{VALUE}};',
