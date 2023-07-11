@@ -7,12 +7,13 @@ const entriesJS = glob.sync(__dirname + '/themes/hello-elementor-child/widgets/*
 
 module.exports = {
 	mode: 'development',
-	stats: 'minimal',
+	cache: false,
+	//stats: 'minimal',
 	entry: [
 		__dirname + '/themes/hello-elementor-child/src/js/app.js',
 		__dirname + '/themes/hello-elementor-child/src/scss/app.scss',
 		entriesScss,
-		entriesJS
+		//entriesJS
 	],
 	output: {
 		path: path.resolve(__dirname, 'themes/hello-elementor-child/assets'),
@@ -23,25 +24,39 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				exclude: /node_modules/,
+				exclude: [
+					path.resolve(__dirname, 'themes/hello-elementor-child/widgets')
+					, /node_modules/
+				],
+				use: [],
+			},
+			{
+				test: /\.*$/,
+				type: 'javascript/auto',
+				exclude: [
+					/node_modules/,
+					path.resolve(__dirname, 'themes/hello-elementor-child/src')
+				],
+				include: [
+					path.resolve(__dirname, 'themes/hello-elementor-child/widgets')
+				],
 				use: [
 					{
 						loader: 'file-loader',
 						options: {
 							outputPath: (url, resourcePath) => {
+								console.log('estoy aca');
 								if (/\\widgets\\/.test(resourcePath)) {
 									return `js/elementor/${url}`;
 								}
-								return `js/${url}`;
 							},
 							useRelativePath: true,
 							name(resourcePath) {
 								if (/\\widgets\\/.test(resourcePath)) {
 									var widgetFolder = resourcePath.split('\\widgets\\');
 									var widgetName = widgetFolder[1].split('\\');
-									return widgetName[0] + '.js';
+									return widgetName[0] + '.min.js';
 								}
-								return '[name].js';
 							},
 						}
 					}

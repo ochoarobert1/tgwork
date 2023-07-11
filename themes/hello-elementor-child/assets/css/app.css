@@ -11858,16 +11858,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-@media (min-width: 1420px) {
-  .page-header .entry-title,
-  .site-footer .footer-inner,
-  .site-footer:not(.dynamic-footer),
-  .site-header .header-inner,
-  .site-header:not(.dynamic-header),
-  body:not([class*=elementor-page-]) .site-main {
-    max-width: 1440px;
-  }
-}
 body {
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;

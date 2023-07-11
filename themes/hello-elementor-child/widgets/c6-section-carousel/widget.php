@@ -51,7 +51,8 @@ class C6SectionCarousel extends Widget_Base
 
 	public function get_script_depends()
 	{
-		return ['swiper', 'c6-section-carousel-script'];
+		//return ['swiper', 'c6-section-carousel-script'];
+		return ['swiper'];
 	}
 
 	protected function register_controls()
@@ -177,15 +178,6 @@ class C6SectionCarousel extends Widget_Base
 			]
 		);
 
-		$this->add_group_control(
-			\Elementor\Group_Control_Background::get_type(),
-			[
-				'name' => 'background',
-				'types' => ['classic', 'gradient', 'video'],
-				'selector' => '{{WRAPPER}} .your-class',
-			]
-		);
-
 		$this->add_control(
 			'title_color',
 			[
@@ -244,35 +236,39 @@ class C6SectionCarousel extends Widget_Base
 ?>
 		<section class="section-carousel container">
 			<div class="row align-items-center justify-content-center">
-				<div class="section-carousel-images col-xl-3 col-md-6 col-12">
-					<?php $arrayImgs = $settings['imageArray']; ?>
-					<div class="section-carousel-swiper-content">
-						<div class="swiper">
-							<div class="swiper-wrapper">
-								<?php foreach ($arrayImgs as $img) : ?>
-									<div class="swiper-slide">
-										<div class="section-carousel-item">
-											<?php if ($img['itemLink']['url'] != '') : ?>
-												<a href="<?php echo esc_url($img['itemLink']['url']); ?>"><?php echo esc_html($img['itemText']); ?></a>
-											<?php endif; ?>
-											<img src="<?php echo esc_url($img['itemImage']['url']); ?>" class="img-fluid" alt="<?php echo esc_attr($img['itemText']); ?>" loading="lazy?>">
-										</div>
+				<div class="section-carousel-container col-xl-8 col-lg-9 col-12">
+					<div class="row align-items-center justify-content-center">
+						<div class="section-carousel-images col-xl-4 col-md-5 col-12">
+							<?php $arrayImgs = $settings['imageArray']; ?>
+							<div class="section-carousel-swiper-content">
+								<div class="swiper">
+									<div class="swiper-wrapper">
+										<?php foreach ($arrayImgs as $img) : ?>
+											<div class="swiper-slide">
+												<div class="section-carousel-item">
+													<?php if ($img['itemLink']['url'] != '') : ?>
+														<a href="<?php echo esc_url($img['itemLink']['url']); ?>"><?php echo esc_html($img['itemText']); ?></a>
+													<?php endif; ?>
+													<img src="<?php echo esc_url($img['itemImage']['url']); ?>" class="img-fluid" alt="<?php echo esc_attr($img['itemText']); ?>" loading="lazy?>">
+												</div>
+											</div>
+										<?php endforeach; ?>
 									</div>
-								<?php endforeach; ?>
+									<div class="swiper-pagination"></div>
+									<div class="swiper-button-prev"></div>
+									<div class="swiper-button-next"></div>
+								</div>
 							</div>
-							<div class="swiper-pagination"></div>
-							<div class="swiper-button-prev"></div>
-							<div class="swiper-button-next"></div>
+						</div>
+						<div class="section-carousel-content col-xl-8 col-md-7 col-12">
+							<h3><?php echo esc_html($settings['textTitle']); ?></h3>
+							<?php echo wp_kses_post($settings['textContent']); ?>
+
+							<?php if ($settings['btnText'] != '') : ?>
+								<a href="<?php esc_url($settings['btnLink']['url']); ?>" class="btn btn-primary"><?php echo esc_html($settings['btnText']); ?></a>
+							<?php endif; ?>
 						</div>
 					</div>
-				</div>
-				<div class="section-carousel-content col-xl-6 col-md-6 col-12">
-					<h3><?php echo esc_html($settings['textTitle']); ?></h3>
-					<?php echo wp_kses_post($settings['textContent']); ?>
-
-					<?php if ($settings['btnText'] != '') : ?>
-						<a href="<?php esc_url($settings['btnLink']['url']); ?>" class="btn btn-primary"><?php echo esc_html($settings['btnText']); ?></a>
-					<?php endif; ?>
 				</div>
 			</div>
 		</section>

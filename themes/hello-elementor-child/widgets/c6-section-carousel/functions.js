@@ -1,0 +1,1 @@
+console.log('C6 section carousel');
