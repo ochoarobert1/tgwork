@@ -51,8 +51,8 @@ class C6SectionCarousel extends Widget_Base
 
 	public function get_script_depends()
 	{
-		//return ['swiper', 'c6-section-carousel-script'];
-		return ['swiper'];
+		return ['swiper', 'c6-section-carousel-script'];
+		//return ['swiper'];
 	}
 
 	protected function register_controls()

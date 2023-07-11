@@ -48,15 +48,13 @@ class TGElementorWidgets
 				'all'
 			);
 
-			/*
 			wp_register_script(
 				$folder . '-script',
-				get_stylesheet_directory_uri() . '/assets/js/elementor/' .  $folder . '.js',
+				get_stylesheet_directory_uri() . '/assets/js/elementor/' .  $folder . '.min.js',
 				['jquery'],
 				HELLO_ELEMENTOR_CHILD_VERSION,
 				true
 			);
-			*/
 		}
 	}
 
