@@ -52,7 +52,7 @@ function tgores_scripts_styles()
 
 	wp_enqueue_script(
 		HELLO_ELEMENTOR_CHILD_PREFIX . '-functions',
-		get_stylesheet_directory_uri() . '/assets/js/app.min.js',
+		get_stylesheet_directory_uri() . '/assets/js/app.js',
 		[
 			'jquery'
 		],
