@@ -23,7 +23,7 @@ define('HELLO_ELEMENTOR_CHILD_PREFIX', 'tgores');
  *
  * @return void
  */
-function hello_elementor_child_scripts_styles()
+function tgores_scripts_styles()
 {
 
 	wp_enqueue_style(
@@ -52,7 +52,7 @@ function hello_elementor_child_scripts_styles()
 
 	wp_enqueue_script(
 		HELLO_ELEMENTOR_CHILD_PREFIX . '-functions',
-		get_stylesheet_directory_uri() . '/assets/js/app.min.js',
+		get_stylesheet_directory_uri() . '/assets/js/app.js',
 		[
 			'jquery'
 		],
@@ -60,9 +60,16 @@ function hello_elementor_child_scripts_styles()
 		true
 	);
 }
-add_action('wp_enqueue_scripts', 'hello_elementor_child_scripts_styles', 20);
+add_action('wp_enqueue_scripts', 'tgores_scripts_styles', 20);
 
-function disable_emojis()
+function tgores_theme_setup()
+{
+	load_child_theme_textdomain('tgores', get_stylesheet_directory() . '/languages');
+}
+
+add_action('after_setup_theme', 'tgores_theme_setup');
+
+function tgores_disable_emojis()
 {
 	remove_action('wp_head', 'print_emoji_detection_script', 7);
 	remove_action('admin_print_scripts', 'print_emoji_detection_script');
@@ -73,7 +80,7 @@ function disable_emojis()
 	remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 }
 
-add_action('init', 'disable_emojis');
+add_action('init', 'tgores_disable_emojis');
 
 remove_action('wp_head', 'wp_generator');
 

@@ -16,42 +16,72 @@ class TGElementorWidgets
 
 	public function __construct()
 	{
-		add_action('elementor/elements/categories_registered', [$this, 'add_elementor_widget_categories']);
-		//add_action('wp_enqueue_scripts', [$this, 'elementor_test_widgets_dependencies'], 80);
-		add_action('elementor/widgets/register', [$this, 'register_list_widget']);
+		add_action('elementor/elements/categories_registered', [$this, 'widget_categories']);
+		add_action('wp_enqueue_scripts', [$this, 'widgets_dependencies'], 80);
+		add_action('elementor/widgets/register', [$this, 'widgets_register']);
 	}
 
-	public function add_elementor_widget_categories($elements_manager)
+	public function widget_categories($elements_manager)
 	{
 		$elements_manager->add_category(
 			'tg-category',
 			[
-				'title' => esc_html__('Tom Gores Components', 'textdomain'),
+				'title' => esc_html__('Tom Gores Components', 'tgores'),
 				'icon' => 'fa fa-plug',
 			]
 		);
 	}
 
-	function elementor_test_widgets_dependencies($widgets)
+	function widgets_dependencies()
 	{
-	}
+		$folders = $this->get_widget_folders();
 
-	public function register_list_widget($widgets_manager)
-	{
-		$path = get_stylesheet_directory() . '/widgets';
-		$ffs = scandir($path);
-		unset($ffs[array_search('.', $ffs, true)]);
-		unset($ffs[array_search('..', $ffs, true)]);
-
-		if (count($ffs) < 1)
+		if (count($folders) < 1)
 			return;
 
-		foreach ($ffs as $ff) {
-			$className = '\\' . preg_replace('/\s+/', '', ucwords(preg_replace('/[-]/', ' ', $ff)));
-			require_once $path . '/' . $ff . '/widget.php';
+		foreach ($folders as $folder) {
+			wp_register_style(
+				$folder . '-style',
+				get_stylesheet_directory_uri() . '/assets/css/elementor/' .  $folder . '.css',
+				[],
+				HELLO_ELEMENTOR_CHILD_VERSION,
+				'all'
+			);
+
+			wp_register_script(
+				$folder . '-script',
+				get_stylesheet_directory_uri() . '/assets/js/elementor/' .  $folder . '.js',
+				['jquery'],
+				HELLO_ELEMENTOR_CHILD_VERSION,
+				true
+			);
+		}
+	}
+
+	public function widgets_register($widgets_manager)
+	{
+		$path = get_stylesheet_directory() . '/widgets';
+		$folders = $this->get_widget_folders();
+
+		if (count($folders) < 1)
+			return;
+
+		foreach ($folders as $folder) {
+			$className = '\\' . preg_replace('/\s+/', '', ucwords(preg_replace('/[-]/', ' ', $folder)));
+			require_once $path . '/' . $folder . '/widget.php';
 
 			$widgets_manager->register(new $className());
 		}
+	}
+
+	public function get_widget_folders()
+	{
+		$path = get_stylesheet_directory() . '/widgets';
+		$folders = scandir($path);
+		unset($folders[array_search('.', $folders, true)]);
+		unset($folders[array_search('..', $folders, true)]);
+
+		return $folders;
 	}
 }
 

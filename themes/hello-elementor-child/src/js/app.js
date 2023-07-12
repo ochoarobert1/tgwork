@@ -1,1 +1,3 @@
-import 'bootstrap';
+function testFunc() {
+	alert('this');
+}
